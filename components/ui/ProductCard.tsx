@@ -6,7 +6,7 @@ import { Expand, ShoppingCart } from 'lucide-react';
 import { Product } from '@/types';
 import IconButton from './IconButton';
 import Currency from './Currency';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 interface ProductCardProps {
   data: Product;
@@ -16,7 +16,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/products/${data.id}`);
+    router.push(`/product/${data.id}`);
   };
 
   return (
