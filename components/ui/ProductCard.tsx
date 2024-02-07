@@ -1,12 +1,15 @@
 'use client';
 
+import { MouseEventHandler } from 'react';
 import Image from 'next/image';
-import { Expand, ShoppingCart } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import usePreviewModal from '@/hooks/use-preview-modal';
 
 import { Product } from '@/types';
 import IconButton from './IconButton';
 import Currency from './Currency';
-import { useRouter } from 'next/navigation';
+
+import { Expand, ShoppingCart } from 'lucide-react';
 
 interface ProductCardProps {
   data: Product;
@@ -15,8 +18,16 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const router = useRouter();
 
+  const { onOpen } = usePreviewModal();
+
   const handleClick = () => {
     router.push(`/product/${data.id}`);
+  };
+
+  const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+
+    onOpen(data);
   };
 
   return (
@@ -34,7 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
         <div className="opacity-0 group-hover:opacity-100 transition absolute w-full px-6 bottom-5">
           <div className="flex gap-x-6 justify-center">
             <IconButton
-              onClick={() => {}}
+              onClick={onPreview}
               icon={<Expand size={20} className="text-gray-600" />}
             />
             <IconButton
